@@ -1,0 +1,13 @@
+#Prerequisites
+#Master Account with Organizations configured
+#Support request to increase account limit
+#CLI installed with credentials configured
+
+#Create the account
+aws organizations create-account --email <valid-email-address> --account-name <unique-descriptive-name>
+
+#Account creation is pretty quick, but you can check on the provisioning this way
+aws organizations describe-create-account-status --create-account-request-id <request-id output from previous command>
+
+#Once account is created you can verify metadata as follows
+aws organizations describe-account --account-id <account-id output from create-account command>
