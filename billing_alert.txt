@@ -1,15 +1,25 @@
-#If you want to check the estimated monthly bill up to the current date, the following command will accomplish this.  The command only works with region set to us-east-1, and must be run on linux, not MacOS (where the date command will error out)
+#If you want to check the estimated monthly bill up to the current
+#date, the following command will accomplish this.  The command
+#only works with region set to us-east-1, and must be run on Linux,
+#not MacOS (where the date command will error out)
 
 aws --region us-east-1 ce get-cost-and-usage --time-period Start=$(date -u -d "$TODAY" '+%Y-%m-01'),End=$(date -u +"%Y-%m-%d" --date="+1 day") --granularity MONTHLY --metrics UnblendedCost --output text | sort -r -k 3 | head -n 1 | cut -f 2
 
-#Creation of a billing alert can be accomplished in the console, but if you want to do this programmatically, the following will make it happen
+#Creation of a billing alert can be accomplished in the console,
+#but if you want to do this programmatically, the following will
+#make it happen
 
-#1.  Create an SNS topic first. The command will output the ARN of the newly created topic.  Copy it.
+#1.  Create an SNS topic first. The command will output the ARN
+#    of the newly created topic.  Copy it.
 aws sns create-topic --name <Short-but-descriptive-text> --region us-east-1
-#2.  Subscribe your email to the SNS topic. The resulting email sent contains a token in the confirmation URL.  You can either click on the link, or confirm the subscription with the next command
+#2.  Subscribe your email to the SNS topic. The resulting email
+#    sent contains a token in the confirmation URL.  You can either
+#    click on the link, or confirm the subscription with the next command
 aws sns subscribe --topic-arn <ARN from previous command> --protocol email --notification-endpoint <email where you want to receive alerts> --region us-east-1
-#3.  Confirm the email subscription.
+#3.  Confirm the email subscription via CLI.
 aws sns confirm-subscription --topic-arn <SNS topic ARN> --region us-east-1 --token <subscription token>
-#4.  Create the billing alarm. The dollar amount can be any positive value, like 1.50 or 1000 or 50.00
+#4.  Create the billing alarm. The dollar amount can be any
+#    positive value, like 1.50 or 1000 or 50.00
+#    The period is set to 8 hours to ensure at least one data point
 aws cloudwatch put-metric-alarm --region us-east-1 --alarm-name "Billing Alert" --metric-name EstimatedCharges --namespace AWS/Billing --statistic Maximum --period 28800 --evaluation-periods 1 --threshold <insert dollar amount here in the form of XX.YY> --comparison-operator GreaterThanThreshold --alarm-actions "<ARN of SNS topic in us-east-1>" --dimensions Name=Currency,Value=USD 
 
