@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CheckTagcostcenter",
+            "Effect": "Deny",
+            "Action": "ec2:RunInstances",
+            "Resource": "arn:aws:ec2:<region>:<12 digit account id>:instance/*",
+            "Condition": {
+                "Null": {
+                    "aws:RequestTag/costcenter": "true"
+                }
+            }
+        },
+        {
+            "Sid": "CheckTagName",
+            "Effect": "Deny",
+            "Action": "ec2:RunInstances",
+            "Resource": "arn:aws:ec2:<region>:<12 digit account id>:instance/*",
+            "Condition": {
+                "Null": {
+                    "aws:RequestTag/Name": "true"
+                }
+            }
+        }
+    ]
+}
