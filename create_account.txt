@@ -1,7 +1,7 @@
-#Prerequisites
-#Master Account with Organizations configured
-#Support request to increase account limit
-#CLI installed with credentials configured
+#Prerequisites:
+# Master Account with Organizations configured
+# Support request to increase account limit (takes 24-48 hours)
+# CLI installed with credentials configured
 
 #Create the account
 aws organizations create-account --email <valid-email-address> --account-name <unique-descriptive-name>
