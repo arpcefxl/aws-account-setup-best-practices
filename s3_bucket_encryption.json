@@ -1,0 +1,13 @@
+{
+    "Bucket": "<bucket name here>",
+    "ServerSideEncryptionConfiguration": {
+        "Rules": [
+            {
+                "ApplyServerSideEncryptionByDefault": {
+                    "SSEAlgorithm": "aws:kms",
+                    "KMSMasterKeyID": "<KMS CMK ID here>"
+                }
+            }
+        ]
+    }
+}

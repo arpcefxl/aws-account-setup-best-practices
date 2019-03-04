@@ -1,0 +1,12 @@
+#Assuming you already have S3 buckets created, and you'd like to enable
+#default SSE using KMS, it is a single command to accomplish.  I've
+#included the JSON object so you don't have to figure out the command
+#line syntax for embedding JSON directly
+#Note that the command uses s3api, NOT s3
+aws s3api put-bucket-encryption --cli-input-json file://s3_bucket_encryption.json
+
+#If you'd like to modify the block public access boolean variables, you can do so
+#on a per-bucket basis.  The JSON object is included for this as well.
+#The default value for all 4 variables is true.
+aws s3api put-public-access-block --cli-input-json file://s3_block_public_access.json
+
