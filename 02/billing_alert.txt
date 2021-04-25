@@ -21,5 +21,5 @@ aws sns confirm-subscription --topic-arn <SNS topic ARN> --region us-east-1 --to
 #4.  Create the billing alarm. The dollar amount can be any
 #    positive value, like 1.50 or 1000 or 50.00
 #    The period is set to 12 hours to ensure at least one data point
-aws cloudwatch put-metric-alarm --region us-east-1 --alarm-name "Billing Alert" --metric-name EstimatedCharges --namespace AWS/Billing --statistic Maximum --period 43200 --evaluation-periods 1 --threshold <insert dollar amount here in the form of XX.YY> --comparison-operator GreaterThanThreshold --alarm-actions "<ARN of SNS topic in us-east-1>" --dimensions Name=Currency,Value=USD 
+aws cloudwatch put-metric-alarm --region us-east-1 --alarm-name "Billing Alert" --metric-name EstimatedCharges --namespace AWS/Billing --statistic Maximum --period 21600 --evaluation-periods 1 --threshold <insert dollar amount here in the form of XX.YY> --comparison-operator GreaterThanThreshold --alarm-actions "<ARN of SNS topic in us-east-1>" --dimensions Name=Currency,Value=USD 
 
